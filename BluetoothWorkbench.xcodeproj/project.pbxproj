@@ -17,12 +17,12 @@
 		4320E4E817B9D5F30010EDFF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4320E4E717B9D5F30010EDFF /* Default@2x.png */; };
 		4320E4EA17B9D5F30010EDFF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4320E4E917B9D5F30010EDFF /* Default-568h@2x.png */; };
 		4320E4ED17B9D5F30010EDFF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4320E4EB17B9D5F30010EDFF /* MainStoryboard.storyboard */; };
-		4320E4F017B9D5F30010EDFF /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4320E4EF17B9D5F30010EDFF /* FirstViewController.m */; };
-		4320E4F217B9D5F30010EDFF /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 4320E4F117B9D5F30010EDFF /* first.png */; };
-		4320E4F417B9D5F30010EDFF /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4320E4F317B9D5F30010EDFF /* first@2x.png */; };
 		4320E4F717B9D5F30010EDFF /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4320E4F617B9D5F30010EDFF /* SecondViewController.m */; };
 		4320E4F917B9D5F30010EDFF /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 4320E4F817B9D5F30010EDFF /* second.png */; };
 		4320E4FB17B9D5F30010EDFF /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4320E4FA17B9D5F30010EDFF /* second@2x.png */; };
+		4320E74A17BA9A630010EDFF /* DevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4320E74917BA9A630010EDFF /* DevicesViewController.m */; };
+		4320E74C17BA9A8B0010EDFF /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4320E74B17BA9A8B0010EDFF /* CoreBluetooth.framework */; };
+		4320E74F17BAA4BE0010EDFF /* BluetoothCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4320E74E17BAA4BE0010EDFF /* BluetoothCentralManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,14 +40,15 @@
 		4320E4E717B9D5F30010EDFF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		4320E4E917B9D5F30010EDFF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4320E4EC17B9D5F30010EDFF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		4320E4EE17B9D5F30010EDFF /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		4320E4EF17B9D5F30010EDFF /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		4320E4F117B9D5F30010EDFF /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
-		4320E4F317B9D5F30010EDFF /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
 		4320E4F517B9D5F30010EDFF /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		4320E4F617B9D5F30010EDFF /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		4320E4F817B9D5F30010EDFF /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		4320E4FA17B9D5F30010EDFF /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		4320E74817BA9A630010EDFF /* DevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicesViewController.h; sourceTree = "<group>"; };
+		4320E74917BA9A630010EDFF /* DevicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicesViewController.m; sourceTree = "<group>"; };
+		4320E74B17BA9A8B0010EDFF /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		4320E74D17BAA4BE0010EDFF /* BluetoothCentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothCentralManager.h; sourceTree = "<group>"; };
+		4320E74E17BAA4BE0010EDFF /* BluetoothCentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothCentralManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4320E74C17BA9A8B0010EDFF /* CoreBluetooth.framework in Frameworks */,
 				4320E4D417B9D5F30010EDFF /* UIKit.framework in Frameworks */,
 				4320E4D617B9D5F30010EDFF /* Foundation.framework in Frameworks */,
 				4320E4D817B9D5F30010EDFF /* CoreGraphics.framework in Frameworks */,
@@ -67,6 +69,7 @@
 		4320E4C717B9D5F30010EDFF = {
 			isa = PBXGroup;
 			children = (
+				4320E74B17BA9A8B0010EDFF /* CoreBluetooth.framework */,
 				4320E4D917B9D5F30010EDFF /* BluetoothWorkbench */,
 				4320E4D217B9D5F30010EDFF /* Frameworks */,
 				4320E4D117B9D5F30010EDFF /* Products */,
@@ -97,15 +100,15 @@
 				4320E4E217B9D5F30010EDFF /* AppDelegate.h */,
 				4320E4E317B9D5F30010EDFF /* AppDelegate.m */,
 				4320E4EB17B9D5F30010EDFF /* MainStoryboard.storyboard */,
-				4320E4EE17B9D5F30010EDFF /* FirstViewController.h */,
-				4320E4EF17B9D5F30010EDFF /* FirstViewController.m */,
-				4320E4F117B9D5F30010EDFF /* first.png */,
-				4320E4F317B9D5F30010EDFF /* first@2x.png */,
+				4320E74817BA9A630010EDFF /* DevicesViewController.h */,
+				4320E74917BA9A630010EDFF /* DevicesViewController.m */,
 				4320E4F517B9D5F30010EDFF /* SecondViewController.h */,
 				4320E4F617B9D5F30010EDFF /* SecondViewController.m */,
 				4320E4F817B9D5F30010EDFF /* second.png */,
 				4320E4FA17B9D5F30010EDFF /* second@2x.png */,
 				4320E4DA17B9D5F30010EDFF /* Supporting Files */,
+				4320E74D17BAA4BE0010EDFF /* BluetoothCentralManager.h */,
+				4320E74E17BAA4BE0010EDFF /* BluetoothCentralManager.m */,
 			);
 			path = BluetoothWorkbench;
 			sourceTree = "<group>";
@@ -180,8 +183,6 @@
 				4320E4E817B9D5F30010EDFF /* Default@2x.png in Resources */,
 				4320E4EA17B9D5F30010EDFF /* Default-568h@2x.png in Resources */,
 				4320E4ED17B9D5F30010EDFF /* MainStoryboard.storyboard in Resources */,
-				4320E4F217B9D5F30010EDFF /* first.png in Resources */,
-				4320E4F417B9D5F30010EDFF /* first@2x.png in Resources */,
 				4320E4F917B9D5F30010EDFF /* second.png in Resources */,
 				4320E4FB17B9D5F30010EDFF /* second@2x.png in Resources */,
 			);
@@ -196,8 +197,9 @@
 			files = (
 				4320E4E017B9D5F30010EDFF /* main.m in Sources */,
 				4320E4E417B9D5F30010EDFF /* AppDelegate.m in Sources */,
-				4320E4F017B9D5F30010EDFF /* FirstViewController.m in Sources */,
 				4320E4F717B9D5F30010EDFF /* SecondViewController.m in Sources */,
+				4320E74A17BA9A630010EDFF /* DevicesViewController.m in Sources */,
+				4320E74F17BAA4BE0010EDFF /* BluetoothCentralManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +322,7 @@
 				4320E50017B9D5F30010EDFF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
