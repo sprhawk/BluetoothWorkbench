@@ -23,6 +23,7 @@
 		4320E74A17BA9A630010EDFF /* DevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4320E74917BA9A630010EDFF /* DevicesViewController.m */; };
 		4320E74C17BA9A8B0010EDFF /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4320E74B17BA9A8B0010EDFF /* CoreBluetooth.framework */; };
 		4320E74F17BAA4BE0010EDFF /* BluetoothCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4320E74E17BAA4BE0010EDFF /* BluetoothCentralManager.m */; };
+		439EA4C717F4B472007A83CC /* PeripheralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 439EA4C617F4B472007A83CC /* PeripheralViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,8 @@
 		4320E74B17BA9A8B0010EDFF /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		4320E74D17BAA4BE0010EDFF /* BluetoothCentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothCentralManager.h; sourceTree = "<group>"; };
 		4320E74E17BAA4BE0010EDFF /* BluetoothCentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothCentralManager.m; sourceTree = "<group>"; };
+		439EA4C517F4B472007A83CC /* PeripheralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeripheralViewController.h; sourceTree = "<group>"; };
+		439EA4C617F4B472007A83CC /* PeripheralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeripheralViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +105,8 @@
 				4320E4EB17B9D5F30010EDFF /* MainStoryboard.storyboard */,
 				4320E74817BA9A630010EDFF /* DevicesViewController.h */,
 				4320E74917BA9A630010EDFF /* DevicesViewController.m */,
+				439EA4C517F4B472007A83CC /* PeripheralViewController.h */,
+				439EA4C617F4B472007A83CC /* PeripheralViewController.m */,
 				4320E4F517B9D5F30010EDFF /* SecondViewController.h */,
 				4320E4F617B9D5F30010EDFF /* SecondViewController.m */,
 				4320E4F817B9D5F30010EDFF /* second.png */,
@@ -200,6 +205,7 @@
 				4320E4F717B9D5F30010EDFF /* SecondViewController.m in Sources */,
 				4320E74A17BA9A630010EDFF /* DevicesViewController.m in Sources */,
 				4320E74F17BAA4BE0010EDFF /* BluetoothCentralManager.m in Sources */,
+				439EA4C717F4B472007A83CC /* PeripheralViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

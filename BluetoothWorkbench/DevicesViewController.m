@@ -8,10 +8,14 @@
 
 #import "DevicesViewController.h"
 #import "BluetoothCentralManager.h"
+#import "PeripheralViewController.h"
+
+ static NSString *CellIdentifier = @"Cell";
 
 @interface DevicesViewController () <CBPeripheralDelegate>
 {
     NSMutableSet * _observers;
+    NSMutableArray * _peripherals;
 }
 @end
 
@@ -22,7 +26,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        [self setupNotifications];
+        [self setup];
         
     }
     return self;
@@ -30,11 +34,25 @@
 
 - (void)awakeFromNib
 {
-    [self setupNotifications];
+    [self setup];
 }
 
 - (void)dealloc
 {
+    [self cleanup];
+}
+
+- (void)setup
+{
+    if (!_peripherals) {
+        _peripherals = [NSMutableArray arrayWithCapacity:5];
+    }
+    [self setupNotifications];
+}
+
+- (void)cleanup
+{
+    _peripherals = nil;
     [self cleanupNotifications];
 }
 
@@ -67,27 +85,26 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return _peripherals.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    
+    CBPeripheral * p = _peripherals[indexPath.row];
+    cell.textLabel.text = p.name;
     return cell;
 }
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -141,6 +158,16 @@
      */
 }
 
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UITableViewCell * c = (UITableViewCell *)sender;
+    NSIndexPath * indexPath = [self.tableView indexPathForCell:c];
+    CBPeripheral * p = _peripherals[indexPath.row];
+    PeripheralViewController * v = (PeripheralViewController *)segue.destinationViewController;
+    v.peripheral = p;
+}
+
 #pragma mark - Setup Notifications
 - (void)setupNotifications
 {
@@ -148,7 +175,7 @@
         _observers = [NSMutableSet setWithCapacity:10];
         
         NSNotificationCenter * c = [NSNotificationCenter defaultCenter];
-        __weak BluetoothCentralManager * _central = [BluetoothCentralManager defaultManager];
+//        __weak BluetoothCentralManager * _central = [BluetoothCentralManager defaultManager];
         __weak DevicesViewController * controller = self;
         id observer = nil;
         observer =
@@ -178,45 +205,18 @@
                        CBPeripheral * p = note.object;
                        if (p) {
                            NSLog(@"Discovered:%@ RSSI:%.3f", p.name, [note.userInfo[PeripheralRSSIKey] floatValue]);
-                           if(!p.isConnected) {
-                               [_central connectPeripheral:p];
+                           NSData * d = note.userInfo[PeripheralAdvertisementDataKey];
+                           if (d) {
+                               NSLog(@"data:%@", d);
                            }
+                           [self.tableView beginUpdates];
+                           [_peripherals addObject:p];
+                           [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_peripherals.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+                           [self.tableView endUpdates];
+
                        }
                    }];
         
-        [_observers addObject:observer];
-        
-        observer =
-        [c addObserverForName:BluetoothCentralManagerDidConnectPeripheralNotification
-                       object:nil
-                        queue:nil
-                   usingBlock:^(NSNotification *note) {
-                       CBPeripheral * p = note.object;
-                       p.delegate = self;
-                       NSLog(@"Connected:%@", p.name);
-                       [p readRSSI];
-                       [p discoverServices:nil];
-                   }];
-        
-        [_observers addObject:observer];
-        
-        observer =
-        [c addObserverForName:BluetoothCentralManagerDidFailToConnectPeripheralNotification
-                       object:nil
-                        queue:nil
-                   usingBlock:^(NSNotification *note) {
-                       
-                   }];
-        
-        [_observers addObject:observer];
-        
-        observer =
-        [c addObserverForName:BluetoothCentralManagerDidDisconnectPeripheralNotification
-                       object:nil
-                        queue:nil
-                   usingBlock:^(NSNotification *note) {
-                       
-                   }];
         [_observers addObject:observer];
     }
     
@@ -250,18 +250,20 @@
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
 {
-    NSLog(@"available services:%d", peripheral.services.count);
-    for (CBService * s in peripheral.services) {
-        [peripheral discoverCharacteristics:nil forService:s];
-    }
+//    NSLog(@"available services:%d", peripheral.services.count);
+//    for (CBService * s in peripheral.services) {
+//        [peripheral discoverCharacteristics:nil forService:s];
+//    }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
 {
-    NSArray * cs = service.characteristics;
-    NSLog(@"available characteristics:%d", [cs count]);
-    for (CBCharacteristic * c in cs) {
-        
-    }
+//    NSArray * cs = service.characteristics;
+//    NSLog(@"available characteristics:%d", [cs count]);
+//    for (CBCharacteristic * c in cs) {
+//        
+//    }
 }
+
+
 @end

@@ -9,23 +9,36 @@
 #import "BluetoothCentralManager.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 
-NSString * BluetoothCentralManagerReadyToUseNotification = @"BluetoothCentralManagerReadyToUseNotification";
-NSString * BluetoothCentralManagerUnavailableNotification = @"BluetoothCentralManagerUnavailableNotification";
-NSString * BluetoothCentralManagerDidDiscoverPeripheralNotification = @"BluetoothCentralManagerDidDiscoverPeripheralNotification";
-NSString * BluetoothCentralManagerDidConnectPeripheralNotification = @"BluetoothCentralManagerDidConnectPeripheralNotification";
-NSString * BluetoothCentralManagerDidFailToConnectPeripheralNotification = @"BluetoothCentralManagerDidFailToConnectPeripheralNotification";
-NSString * BluetoothCentralManagerDidDisconnectPeripheralNotification = @"BluetoothCentralManagerDidDisconnectPeripheralNotification";
+NSString * const BluetoothCentralManagerReadyToUseNotification = @"BluetoothCentralManagerReadyToUseNotification";
+NSString * const BluetoothCentralManagerUnavailableNotification = @"BluetoothCentralManagerUnavailableNotification";
+NSString * const BluetoothCentralManagerDidDiscoverPeripheralNotification = @"BluetoothCentralManagerDidDiscoverPeripheralNotification";
+NSString * const BluetoothCentralManagerDidConnectPeripheralNotification = @"BluetoothCentralManagerDidConnectPeripheralNotification";
+NSString * const BluetoothCentralManagerDidFailToConnectPeripheralNotification = @"BluetoothCentralManagerDidFailToConnectPeripheralNotification";
+NSString * const BluetoothCentralManagerDidDisconnectPeripheralNotification = @"BluetoothCentralManagerDidDisconnectPeripheralNotification";
 
-NSString * PeripheralAdvertisementDataKey = @"PeripheralAdvertisementDataKey";
-NSString * PeripheralRSSIKey = @"PeripheralRSSIValueKey";
-NSString * PeripheralErrorKey = @"PeripheralErrorKey";
-NSString * BluetoothCentralStateKey = @"BluetoothCentralStateKey";
+NSString * const PeripheralAdvertisementDataKey = @"PeripheralAdvertisementDataKey";
+NSString * const PeripheralRSSIKey = @"PeripheralRSSIValueKey";
+NSString * const PeripheralErrorKey = @"PeripheralErrorKey";
+NSString * const BluetoothCentralStateKey = @"BluetoothCentralStateKey";
+
+NSString * const BluetoothServiceDeviceInfomationKey = @"Device Infomation";
+NSString * const BluetoothServiceDeviceInfomationServiceKey = @"Service";
+NSString * const BluetoothServiceDeviceInfomationSystemIdKey = @"System Id";
+NSString * const BluetoothServiceDeviceInfomationManufacturerNameKey = @"Manufacturer Name";
+NSString * const BluetoothServiceDeviceInfomationModelNumberKey = @"Model Number";
+NSString * const BluetoothServiceDeviceInfomationSerialNumberKey = @"Serial Number";
+NSString * const BluetoothServiceDeviceInfomationHardwareRevisionKey = @"Hardware Revision";
+NSString * const BluetoothServiceDeviceInfomationFirmwareRevisionKey = @"Firmware Revision";
+NSString * const BluetoothServiceDeviceInfomationSoftwareRevisionKey = @"Software Revision";
+NSString * const BluetoothServiceDeviceInfomationRegulatoryCertificationDataListKey = @"Regulatory Certification Data List";
+NSString * const BluetoothServiceDeviceInfomationPnPIDKey = @"PnP id";
 
 @interface BluetoothCentralManager () <CBCentralManagerDelegate>
 {
     CBCentralManager * _central;
     NSMutableSet * _discoveredPeripherals;
 }
+@property (nonatomic, strong, readwrite) NSDictionary * services;
 @end
 
 @implementation BluetoothCentralManager
@@ -46,6 +59,21 @@ NSString * BluetoothCentralStateKey = @"BluetoothCentralStateKey";
     if (self) {
         _central = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
         _discoveredPeripherals = [[NSMutableSet alloc] initWithCapacity:10];
+        self.services = @{BluetoothServiceDeviceInfomationKey:
+                              @{BluetoothServiceDeviceInfomationServiceKey:[CBUUID UUIDWithString:@"180A"],
+                                BluetoothServiceDeviceInfomationSystemIdKey:[CBUUID UUIDWithString:@"2A23"], //Manufacturer Identifier(40)/Organizationally Unique Identifier(24)
+                                BluetoothServiceDeviceInfomationModelNumberKey: [CBUUID UUIDWithString:@"2A24"], //utf8
+                                BluetoothServiceDeviceInfomationSerialNumberKey: [CBUUID UUIDWithString:@"2A25"], //utf8
+                                BluetoothServiceDeviceInfomationFirmwareRevisionKey: [CBUUID UUIDWithString:@"2A26"],
+                                BluetoothServiceDeviceInfomationHardwareRevisionKey: [CBUUID UUIDWithString:@"2A27"],
+                                BluetoothServiceDeviceInfomationSoftwareRevisionKey: [CBUUID UUIDWithString:@"2A28"],
+                                BluetoothServiceDeviceInfomationManufacturerNameKey:[CBUUID UUIDWithString:@"2A29"], //utf8
+                                BluetoothServiceDeviceInfomationManufacturerNameKey:[CBUUID UUIDWithString:@"2A29"],
+                                BluetoothServiceDeviceInfomationRegulatoryCertificationDataListKey: [CBUUID UUIDWithString:@"2A2A"],
+                                BluetoothServiceDeviceInfomationPnPIDKey: [CBUUID UUIDWithString:@"2A50"],
+                                },
+                          };
+
     }
     return self;
 }
@@ -116,13 +144,15 @@ NSString * BluetoothCentralStateKey = @"BluetoothCentralStateKey";
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
-    [_discoveredPeripherals addObject:peripheral];
-    NSLog(@"discovered number:%d", [_discoveredPeripherals count]);
-    NSNotification * n ;
-    n = [NSNotification notificationWithName:BluetoothCentralManagerDidDiscoverPeripheralNotification
-                                      object:peripheral
-                                    userInfo:@{PeripheralAdvertisementDataKey: advertisementData, PeripheralRSSIKey:RSSI}];
-    [[NSNotificationCenter defaultCenter] postNotification:n];
+    if (![_discoveredPeripherals containsObject:peripheral]) { //为什么会有重复的，因为不同事的data么？
+        [_discoveredPeripherals addObject:peripheral];
+        NSLog(@"discovered number:%d", [_discoveredPeripherals count]);
+        NSNotification * n ;
+        n = [NSNotification notificationWithName:BluetoothCentralManagerDidDiscoverPeripheralNotification
+                                          object:peripheral
+                                        userInfo:@{PeripheralAdvertisementDataKey: advertisementData, PeripheralRSSIKey:RSSI}];
+        [[NSNotificationCenter defaultCenter] postNotification:n];
+    }
 }
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
@@ -137,9 +167,15 @@ NSString * BluetoothCentralStateKey = @"BluetoothCentralStateKey";
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
     NSNotification * n ;
+    NSDictionary * userInfo = nil;
+    if (error) {
+        userInfo = @{PeripheralErrorKey: error};
+        
+    }
+    NSLog(@"failed To Connect %@", error);
     n = [NSNotification notificationWithName:BluetoothCentralManagerDidFailToConnectPeripheralNotification
                                       object:peripheral
-                                    userInfo:@{PeripheralErrorKey: error}];
+                                    userInfo:userInfo];
     [[NSNotificationCenter defaultCenter] postNotification:n];
 }
 
@@ -147,9 +183,14 @@ NSString * BluetoothCentralStateKey = @"BluetoothCentralStateKey";
 {
     
     NSNotification * n ;
+    NSDictionary * userInfo = nil;
+    if (error) {
+        userInfo = @{PeripheralErrorKey: error};
+    }
+    NSLog(@"Disconnected:%@", error);
     n = [NSNotification notificationWithName:BluetoothCentralManagerDidDisconnectPeripheralNotification
                                       object:peripheral
-                                    userInfo:@{PeripheralErrorKey: error}];
+                                    userInfo:userInfo];
     [[NSNotificationCenter defaultCenter] postNotification:n];
 }
 
@@ -179,3 +220,44 @@ NSString * BluetoothCentralStateKey = @"BluetoothCentralStateKey";
 
 @end
 
+@implementation CBService (UUIDString)
+
+- (NSString *)UUIDString
+{
+    return self.UUID.UUIDString;
+}
+
+@end
+
+@implementation CBCharacteristic (UUIDString)
+
+- (NSString *)UUIDString
+{
+    return self.UUID.UUIDString;
+}
+
+@end
+
+@implementation CBUUID (UUIDString)
+
+- (NSString *)UUIDString
+{
+    NSMutableString * s = [NSMutableString stringWithCapacity:self.data.length * 2 + 4];
+    unsigned char * b = (unsigned char *)self.data.bytes;
+    for (NSUInteger i = 0; i < self.data.length; i ++) {
+        [s appendFormat:@"%02X", *(b + i)];
+        switch (i) {
+            case 3:
+            case 5:
+            case 7:
+            case 9:
+                [s appendString:@"-"];
+                break;
+            default:
+                break;
+        }
+    }
+    return [s copy];
+}
+
+@end
